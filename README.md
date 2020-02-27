@@ -4,7 +4,7 @@ Awesome markdown CV for your outstanding job application.
 
 Every platform has their own way to handle markdown syntax. This CV supports [github flavoured markdown](https://github.github.com/gfm/). 
 
-## What will you fine here?
+## What will you find here?
 This was the solution I thought to make my own CV in a simple and readable template that is semantic and easy to change.
 
 ## Why markdown?
@@ -17,9 +17,9 @@ You are free to take my `cv.md` file and modify it in any IDE to create your own
 
 Once changes done:
 
-We can directly change `cv.md`to PDF with the help of pandoc i.e. `pandoc cv.md -f gfm -o cv.pdf`
+- We can directly change `cv.md`to PDF with the help of pandoc i.e. `pandoc cv.md -f gfm -o cv.pdf`
 
-But pandoc uses the default PDF template and it won't be beautiful. To make simple but beautiful PDF, we first have to convert `cv.md` to `cv.html`. So: 
+But pandoc uses the default PDF template and you may not like it. To make simple but beautiful PDF, we first have to convert `cv.md` to `cv.html`. So: 
 
 - Go to: [https://stackedit.io/app](https://stackedit.io/app) and insert raw content of `cv.md` there.
 - Export it as 'Styled HTML'. 
