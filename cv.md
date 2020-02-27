@@ -1,7 +1,6 @@
 # <center> **Tajinder Singh** </center>
 
 <center> Security Engineer at <b>GFG</b> <br>
-
  mail@tajinder.info | +49 XXXXX 09278 | linkedin.com/in/iamtajinder </center>
 
 - 5+ years of experience as a  Security Engineer
