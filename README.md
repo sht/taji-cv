@@ -1,39 +1,58 @@
-# Awesome markdown CV
+## How to Use
 
-Awesome markdown CV for your outstanding job application.
+#### Requirements
 
-Every platform has their own way to handle markdown syntax. This CV supports [github flavoured markdown](https://github.github.com/gfm/). 
+A full TeX distribution is assumed.  [Various distributions for different operating systems (Windows, Mac, \*nix) are available](http://tex.stackexchange.com/q/55437) but TeX Live is recommended.
+You can [install TeX from upstream](http://tex.stackexchange.com/q/1092) (recommended; most up-to-date) or use `sudo apt-get install texlive-full` if you really want that.  (It's generally a few years behind.)
 
-## What will you find here?
-This was the solution I thought to make my own CV in a simple and readable template that is semantic and easy to change.
+#### Usage
 
-## Why markdown?
+At a command prompt, run
 
-It has always been tough for me to maintain and update my CV in doc format. I thought to leverage markdown format for this. Markdown varies with each platform as I mentioned earlier. I've been using md on [joplin](https://github.com/laurent22/joplin), [Intellij](https://github.com/JetBrains/intellij-community), [sublime](https://github.com/SublimeText-Markdown/MarkdownEditing), etc for various documentation purposes. It's easy to be organised (to-do, bookmarks, notes, etc) with an application which support markdown. I personally liked [joplin](https://github.com/laurent22/joplin), I can convert md to PDF directly there without any additional 3rd party dependency and hustle.
+```bash
+$ xelatex {your-cv}.tex
+```
 
-## How to use
+This should result in the creation of ``{your-cv}.pdf``
 
-You are free to take my `cv.md` file and modify it in any IDE to create your own resume. You can also fork this repo and make changes directly in `cv.md` file.
+or leverage ci.yml script:
 
-Once changes done:
+```
+compile_pdf:
+  stage: build
+  image: thomasweise/texlive  # use a Docker image for LaTeX from https://hub.docker.com/
+  script: xelatex cv.tex  # build the pdf just as you would on your computer
+  artifacts:
+    paths: 
+      - cv.pdf  # instruct GitLab to keep the cv.pdf file
 
-- We can directly change `cv.md`to PDF with the help of pandoc i.e. `pandoc cv.md -f gfm -o cv.pdf`
+pages:
+  stage: deploy
+  script:
+    - mkdir public  # create a folder called public
+    - cp cv.pdf public  # copy the pdf file into the public folder
+  artifacts:
+    paths: 
+      - public  # instruct GitLab to keep the public folder
+  except:
+    - master  # Only for the master branch 
 
-But pandoc uses the default PDF template and you may not like it. To make simple but beautiful PDF, we first have to convert `cv.md` to `cv.html`. So: 
 
-- Go to: [https://stackedit.io/app](https://stackedit.io/app) and insert raw content of `cv.md` there.
-- Export it as 'Styled HTML'. 
-<br>
+```
 
-**Simple way to convert to PDF:**
+## Credit
 
-- Open this html file offline in any browser and `Ctrl+P` to pop up print page window. 
-    - Uncheck 'Header and Footer' option and save file as PDF
+[**LaTeX**](http://www.latex-project.org) is a fantastic typesetting program that a lot of people use these days, especially the math and computer science people in academia.
 
-**Geek way to convert to PDF:**
+[**LaTeX FontAwesome**](https://github.com/furl/latex-fontawesome) is bindings for FontAwesome icons to be used in XeLaTeX.
 
-`pandoc cv.html -o cv.pdf`
+[**Roboto**](https://github.com/google/roboto) is the default font on Android and ChromeOS, and the recommended font for Google’s visual language, Material Design.
 
-or
+[**Source Sans Pro**](https://github.com/adobe-fonts/source-sans-pro) is a set of OpenType fonts that have been designed to work well in user interface (UI) environments.
 
-`pandoc cv.md -f gfm -o cv.pdf`
+
+## Contact
+
+You are free to take my `.tex` file and modify it to create your own cv. Please don't use my cv for anything else without my permission, though!
+
+Good luck!
