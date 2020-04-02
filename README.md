@@ -1,3 +1,9 @@
+# Tajinder CV
+
+Pdf: [taji_cv.pdf](taji_cv.pdf)
+
+Built using LaTeX. 
+
 ## How to Use
 
 #### Requirements
