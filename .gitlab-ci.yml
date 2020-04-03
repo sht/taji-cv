@@ -1,0 +1,7 @@
+compile_pdf:
+  stage: build
+  image: thomasweise/texlive
+  script: xelatex cv.tex
+  artifacts:
+    paths:
+      - cv.pdf 
