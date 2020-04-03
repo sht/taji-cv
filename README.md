@@ -1,6 +1,6 @@
 # Tajinder CV
 
-Pdf: [taji_cv.pdf](taji_cv.pdf)
+Pdf: [taji_cv.pdf](https://tajinder.info.gitlab.io/taji-cv/cv.pdf)
 
 Built using LaTeX. 
 
@@ -26,23 +26,22 @@ or leverage ci.yml script:
 ```
 compile_pdf:
   stage: build
-  image: thomasweise/texlive  # use a Docker image for LaTeX from https://hub.docker.com/
-  script: xelatex cv.tex  # build the pdf just as you would on your computer
+  image: thomasweise/texlive    # use a Docker image for LaTeX from https://hub.docker.com/
+  script: xelatex cv.tex        # build the pdf just as you would on your computer
   artifacts:
     paths: 
-      - cv.pdf  # instruct GitLab to keep the cv.pdf file
+      - cv.pdf                  # instruct GitLab to keep the cv.pdf file
 
 pages:
   stage: deploy
   script:
-    - mkdir public  # create a folder called public
-    - cp cv.pdf public  # copy the pdf file into the public folder
+    - mkdir public        # create a folder called public
+    - mv cv.pdf public    # copy the pdf file into the public folder
   artifacts:
-    paths: 
-      - public  # instruct GitLab to keep the public folder
-  except:
-    - master  # Only for the master branch 
-
+    paths:
+      - public            # instruct GitLab to keep the public folder
+  only:
+    - master              # Only for the master branch 
 
 ```
 
