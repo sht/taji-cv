@@ -1,6 +1,6 @@
 # Tajinder CV
 
-Pdf: [taji_cv.pdf](https://tajinder.info.gitlab.io/taji-cv/cv.pdf)
+Pdf: [taji_cv.pdf](https://taji2.gitlab.io/taji-cv/cv.pdf)
 
 Built using LaTeX. 
 
