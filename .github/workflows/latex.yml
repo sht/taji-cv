@@ -1,0 +1,7 @@
+- name: Compile LateX
+  uses: vinay0410/tectonic-action@v1.1.2
+  with:
+    cv.tex
+    tex_path: 
+    yes
+    push: # optional, default is no
