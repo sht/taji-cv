@@ -2,6 +2,5 @@
   uses: vinay0410/tectonic-action@v1.1.2
   with:
     cv.tex
-    tex_path: 
-    yes
+    tex_path: /
     push: # optional, default is no
