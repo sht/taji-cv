@@ -1,14 +1,18 @@
-name: Awesome-CI
+compile_pdf:
+  stage: build
+  image: thomasweise/texlive    # use a Docker image for LaTeX from https://hub.docker.com/
+  script: xelatex cv.tex        # build the pdf just as you would on your computer
+  artifacts:
+    paths: 
+      - cv.pdf                  # instruct GitLab to keep the cv.pdf file
 
-on: [push]
-
-jobs:
-  awesome-cv-job:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v1
-    - uses: olivierodo/awesome-cv-action@0.0.1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        FILE_NAME: 'cv.tex'
+pages:
+  stage: deploy
+  script:
+    - mkdir public        # create a folder called public
+    - mv cv.pdf public    # copy the pdf file into the public folder
+  artifacts:
+    paths:
+      - public            # instruct GitLab to keep the public folder
+  only:
+    - master              # Only for the master branch 
