@@ -10,12 +10,12 @@ jobs:
         uses: ./
         with:
           root_file: cv .tex
-          working_directory: test/
+          working_directory: /
       - name: Compile LaTeX document with pre/post compile actions
         uses: ./
         with:
           root_file: cv.tex
-          working_directory: test/
+          working_directory: /
           pre_compile: |
             rm test.pdf
           post_compile: |
