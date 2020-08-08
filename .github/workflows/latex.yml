@@ -1,56 +1,14 @@
-name: Test Github Action
-on: [push, pull_request]
+name: Awesome-CI
+
+on: [push]
+
 jobs:
-  test:
+  awesome-cv-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v2
-      - name: Compile basic LaTeX document
-        uses: ./
-        with:
-          root_file: cv .tex
-          working_directory: /
-      - name: Compile LaTeX document with pre/post compile actions
-        uses: ./
-        with:
-          root_file: cv.tex
-          working_directory: /
-          pre_compile: |
-            rm test.pdf
-          post_compile: |
-            ls test.pdf
-      - name: Test Action with Github Default Template
-        uses: ./
-        with:
-          # The root LaTeX file to be compiled
-          root_file: cv.tex
-          # The working directory for the LaTeX engine
-          working_directory: # optional
-          # The LaTeX engine to be invoked
-          compiler: # optional, default is latexmk
-          # Extra arguments to be passed to the LaTeX engine
-          args: # optional, default is -pdf -file-line-error -halt-on-error -interaction=nonstopmode
-          # [Deprecated] Install extra packages by tlmgr
-          extra_packages: # optional
-          # Install extra packages by apk
-          extra_system_packages: # optional
-          # Arbitrary bash codes to be executed before compiling LaTeX documents
-          pre_compile: # optional
-          # Arbitrary bash codes to be executed after compiling LaTeX documents
-          post_compile: # optional
-          # Instruct latexmk to enable --shell-escape
-          latexmk_shell_escape: # optional
-          # Instruct latexmk to use LuaLaTeX
-          latexmk_use_lualatex: # optional
-          # Instruct latexmk to use XeLaTeX
-          latexmk_use_xelatex: # optional
-      - name: Check pdf files
-        run: |
-          file test.pdf | grep -q ' PDF '
-      - name: Upload
-        uses: actions/upload-artifact@master
-        with:
-          name: test
-          path: test
-        if: always()
+    - uses: actions/checkout@v1
+    - uses: olivierodo/awesome-cv-action@0.0.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        FILE_NAME: 'cv.tex'
