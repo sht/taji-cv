@@ -1,5 +1,5 @@
-# Tajinder CV
+# LaTeX CV - Taji
 
-> Inspired from the amazing project [posquit0/Awesome-CV](https://github.com/posquit0/Awesome-CV)
+Inspired from the awesome CV project [posquit0/Awesome-CV](https://github.com/posquit0/Awesome-CV)
 
 Built using LaTeX. 
