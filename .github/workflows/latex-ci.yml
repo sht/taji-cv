@@ -1,4 +1,4 @@
-name: LaTeX Taji PDF
+name: LaTeX Taji CV
 
 on:
   push:
@@ -13,12 +13,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4.2.2
 
-      - name: Build
+      - name: Build CV Artifact
         uses: xu-cheng/latex-action@v3
         with:
           root_file: cv.tex
 
-      - name: Copy
+      - name: Copy CV Artifact
         run: |
           mkdir -p out
           cp ./cv.pdf ./out/cv.pdf
@@ -50,6 +50,6 @@ jobs:
         run: |
           mkdir -p out
           mv cv.pdf out/cv.pdf
-          TAG="cv-pdf-$(date +'%S')"
+          TAG="cv-pdf-$(date +'%Y-%M%S')"
           TITLE="Latest CV | $(date +'%b %d, %Y')"
           gh release create "$TAG" out/cv.pdf --title "$TITLE" --notes "Automatically generated CV by GitHub Actions." --latest
