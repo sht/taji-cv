@@ -1,0 +1,112 @@
+\documentclass[11pt]{article}
+
+%==== Encoding and Font Settings ====%
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype} % Improved typographic quality
+\usepackage{inter} % Sans-serif font
+\renewcommand*\familydefault{\sfdefault}
+\hbadness=10000
+\vbadness=10000
+
+%==== Page Geometry ====%
+\usepackage{geometry}
+\geometry{
+    a4paper,
+    top=1.8cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm
+}
+
+%==== Section Numbering and Accessibility ====%
+\setcounter{secnumdepth}{0} % Disable section numbering
+\pdfgentounicode=1
+
+%==== List Customization ====%
+\usepackage{enumitem}
+\setlist[itemize]{
+    noitemsep,
+    left=2em
+}
+\setlist[description]{itemsep=0pt}
+\setlist[enumerate]{align=left}
+
+%==== Colors and Title Formatting ====%
+\usepackage[dvipsnames]{xcolor}
+\definecolor{SapphireBlue}{HTML}{0F52BA}
+\definecolor{LightGray}{HTML}{B8B9B6}
+\definecolor{ByzantineBlue}{HTML}{3457D5}
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{0.5em}{0.25em}
+\titlespacing*{\subsection}{0pt}{0.25em}{0.15em}
+\titlespacing*{\subsubsection}{0pt}{0.25em}{0.15em}
+\titleformat{\section}{\color{SapphireBlue}\large\bfseries\uppercase}{}{0em}{\ruleafter}
+\titleformat{\subsection}{\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\color{gray}\bfseries}{}{0em}{}
+
+% Rule decoration for titles
+\usepackage{xhfill}
+\newcommand\ruleafter[1]{#1~\xrfill[.5ex]{1pt}[gray]}
+
+%==== Font Awesome Icons ====%
+\usepackage{fontawesome5}
+
+%==== Hyperlinks and Metadata ====%
+\usepackage{hyperref}
+\hypersetup{
+    unicode=true,
+    colorlinks=true,
+    urlcolor=Black, % Default URL color
+    pdftitle={Taji CV},
+    pdfauthor={Tajinder},
+    pdfcreator={pdflatex},
+    pdfpagelayout=OneColumn
+}
+
+% Custom command for blue hyperlinks
+\newcommand{\bluelink}[2]{\href{#1}{\textcolor{ByzantineBlue}{#2}}}
+
+%==== Bookmark Stability ====%
+\usepackage{bookmark}
+
+%==== AMS Math and Fonts ====%
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+%==== Fancy Footer Configuration ====%
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\fancyfoot[R]{%
+    \hspace*{\fill}\color{LightGray}\rule{0.23\textwidth}{0.5pt} % Right-aligned rule
+    \\[0.2cm] % Adjust vertical spacing
+    \fontsize{9}{11}\selectfont
+    \color{LightGray}\today\hspace{0.1cm}|\hspace{0.1cm}\thepage/\pageref*{LastPage}%
+}
+\renewcommand{\headrulewidth}{0pt} % Remove header rule
+\renewcommand{\footrulewidth}{0pt} % Disable default foot rule
+
+\begin{document}
+
+%==== HEADER ====%
+\begin{center}
+    {\color{SapphireBlue}\fontsize{28}{28}\selectfont \textbf{Adrian Lamo}} \\ [1em]
+    {\color{CornflowerBlue}\faMapMarker} Wexford, Ireland \quad
+    {\color{CornflowerBlue}\faEnvelope[regular]} \href{mailto:lamo@pm.me}{lamo@pm.me} \quad
+    {\color{CornflowerBlue}\faIcon{mobile-alt}} \href{tel:+353621391337}{+35 3621391337}
+\end{center}
+
+%==== SECTIONS ====%
+\input{sections/summary}
+\input{sections/experience}
+\input{sections/projects}
+\input{sections/presentations}
+\input{sections/qualifications}
+\input{sections/certifications}
+
+\end{document}
