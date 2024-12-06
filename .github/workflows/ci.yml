@@ -1,0 +1,53 @@
+name: Build and Publish Taji CV
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install TinyTeX
+        run: |
+          curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+          export PATH=\$PATH:/home/runner/bin
+          tlmgr install \$(tr '\n' ' ' < requirements.txt || true)
+
+      - name: Compile LaTeX document
+        run: pdflatex cv.tex
+
+      - name: Upload CV PDF
+        uses: actions/upload-artifact@v2
+        with:
+          name: cv
+          path: cv.pdf
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Delete previous releases
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete \$(gh release list --json tagName --jq '.[0].tagName') --yes
+
+      - name: Download CV
+        uses: actions/download-artifact@v2
+        with:
+          name: cv
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create latest cv.pdf --title "Latest CV" --notes "Automatically generated CV."
