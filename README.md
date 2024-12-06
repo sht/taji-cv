@@ -10,6 +10,37 @@ All the data used in the CV is fictional, as I didn’t want to expose my person
 
 Built with LaTeX.
 
+# Automated Workflow: GitHub Actions
+
+If you only need to update the content and don’t want the hassle of maintaining an offline setup, you can use GitHub Actions to compile the LaTeX code and publish your CV as a release artifact.
+
+### Workflow Overview:
+1. Triggering the Workflow:
+	- The GitHub Actions workflow is triggered automatically on changes pushed to the master branch or manually via the “Run Workflow” button.
+2.	Compilation and Publishing:
+	- The workflow compiles the LaTeX code, uploads the generated PDF (cv.pdf) as a release artifact, and publishes it directly to [releases here](https://github.com/sht/taji-cv/releases).
+3.	Benefits:
+	- No need to set up a local LaTeX environment.
+	- Ensures consistency and reliability by running on GitHub’s servers.
+	- Easily share the CV PDF by downloading it from the release.
+
+### Linking the Workflow
+
+The GitHub Actions workflow is defined in [.github/workflows/latex-ci.yml](.github/workflows/latex-ci.yml). Here’s a brief explanation:
+
+When changes are pushed to the master branch, the workflow:
+1. Checks out the repository.
+2. Compiles the LaTeX file using `Latexmk` on GitHub’s server.
+3. Uploads the generated `cv.pdf` as a release artifact with a unique tag name.
+
+With this setup, your `cv.pdf` is compiled and uploaded as a release artifact whenever changes are merged into the master branch. 
+
+Choose the **offline setup** for development purposes, but rely on **GitHub Actions** for quick updates and hassle-free publishing of your CV PDF.
+
+# Offline Setup: TinyTeX Installation
+
+For development purposes, you can use lightweight `TinyTeX`: A lightweight, cross-platform, portable, and easy-to-maintain LaTeX distribution based on TeX Live. 
+
 ## Installation
 
 To install `TinyTeX` on macOS, use the following command:
@@ -20,7 +51,7 @@ curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
 
 `tlmgr` is the package manager which is installed now with `TinyTeX`.
 
-For installing the required packages, make sure all dependencies mentioned in `requirements.txt` are installed. On macOS, you can install all the necessary packages with the following command:
+For installing the required packages, make sure all dependencies mentioned in [requirements.txt](./requirements.txt) are installed. On macOS, you can install all the necessary packages with the following command:
 
 ```
 tlmgr install $(tr '\n' ' ' < requirements.txt)
@@ -39,9 +70,9 @@ To simplify the compilation process, I aliased `pdflatex` to `px` in `.zshrc` fo
 
 Now, it’s easy to run: `px cv.tex` 🍻
 
-### Common Errors and Solutions
+## Common Errors and Solutions
 
-During compilation, you might encounter errors if not all the packages from `requirements.txt` are installed.
+During compilation, you might encounter errors if not all the packages from [requirements.txt](./requirements.txt) are installed.
 
 For example:
 
@@ -70,7 +101,7 @@ Install the required package with:
 tlmgr install titlesec
 ```
 
-Initially, I encountered many such errors and resolved them by installing the appropriate packages. All the necessary packages have been exported in `requirements.txt`, so you likely won’t run into these issues, but it’s still good to learn how to troubleshoot them.
+Initially, I encountered many such errors and resolved them by installing the appropriate packages. All the necessary packages have been exported in [requirements.txt](./requirements.txt), so you likely won’t run into these issues, but it’s still good to learn how to troubleshoot them.
 
 Even after installing all the packages, I encountered this error:
 
