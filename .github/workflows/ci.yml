@@ -50,4 +50,5 @@ jobs:
         run: |
           mkdir -p out
           mv cv.pdf out/cv.pdf
-          gh release create latest out/cv.pdf --title "Latest CV" --notes "Automatically generated CV."
+          TAG="cv-pdf-$(date +'%Y%m%d-%H%M%S')"
+          gh release create "$TAG" out/cv.pdf --title "Latest CV" --notes "Automatically generated CV."
