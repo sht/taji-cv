@@ -1,10 +1,9 @@
 name: LaTeX Taji PDF
-
-on:
+'on':
   push:
-    branches: [ master ]
-
-  workflow_dispatch:
+    branches:
+      - master
+  workflow_dispatch: null
 
 jobs:
   build:
@@ -12,42 +11,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
-
       - name: Build
         uses: xu-cheng/latex-action@v3
         with:
           root_file: cv.tex
-
       - name: Copy
         run: |
           mkdir out
           cp ./cv.pdf ./out/cv.pdf
-
       - uses: actions/upload-artifact@v4
         with:
           name: taji-cv
           path: ./out/cv.pdf
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4.2.2
+release:
+  needs: build
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v4.2.2
+    - name: Download CV
+      uses: actions/download-artifact@v4
+      with:
+        name: taji-cv
+    - name: Verify Artifact
+      run: ls -al
+    - name: Create Release
+      env:
+        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+      run: >
+        mkdir -p out
 
-      - name: Delete previous release
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release delete latest --yes || true
+        mv cv.pdf out/cv.pdf
 
-      - name: Download CV
-        uses: actions/download-artifact@v4
-        with:
-          name: taji-cv
-
-      - name: Create Release
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh release create latest out/cv.pdf --title "Latest CV" --notes "Automatically generated CV."
+        gh release create latest out/cv.pdf --title "Latest CV" --notes
+        "Automatically generated CV."
