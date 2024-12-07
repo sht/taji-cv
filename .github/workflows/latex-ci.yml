@@ -44,12 +44,28 @@ jobs:
       - name: Verify Artifact
         run: ls -al
 
-      - name: Create Release
+      - name: Determine Unique Tag
+        id: set_tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          TAG_BASE="cv-$(date +'%Y')"
+          COUNT=0
+          UNIQUE_TAG="$TAG_BASE"
+          while gh release view "$UNIQUE_TAG" &>/dev/null; do
+            COUNT=$((COUNT + 1))
+            UNIQUE_TAG="${TAG_BASE}-v${COUNT}"
+          done
+          echo "TAG=$UNIQUE_TAG" >> $GITHUB_ENV
+          echo "Unique tag determined: $UNIQUE_TAG"
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ env.TAG }}
+        run: |
           mkdir -p out
           mv cv.pdf out/cv.pdf
-          TAG="cv-$(date +'%Y-%M-%S')"
           TITLE="Latest CV | $(date +'%b %d, %Y')"
+          echo "Creating release with tag: $TAG"
           gh release create "$TAG" out/cv.pdf --title "$TITLE" --notes "Automatically generated CV by GitHub Actions" --latest
